@@ -65,7 +65,7 @@ if [ "$NEBLIOQT" = true ]; then
     sudo apt-get install qttools5-dev-tools -y
 fi
 sudo aptitude install libssl1.0-dev -y
-sudo apt-get install wget
+sudo apt-get install wget -y
 
 if [ "$COMPILE" = true ]; then
     # delete our src folder and then remake it
