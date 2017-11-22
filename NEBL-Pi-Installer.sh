@@ -1,5 +1,5 @@
 #!/bin/bash
-#NEBL-Pi Installer v0.1
+#NEBL-Pi Installer v0.2
 
 echo "================================================================================"
 echo "=================== Welcome to the Ofiicial NEBL-Pi Installer =================="
