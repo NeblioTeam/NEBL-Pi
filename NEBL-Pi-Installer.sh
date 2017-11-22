@@ -23,9 +23,15 @@ echo "==========================================================================
 USAGE="$0 [-d | -q | -dq]"
 
 NEBLIODIR=~/neblpi-source
+DEST_DIR=~/Desktop/
 NEBLIOD=false
 NEBLIOQT=false
 COMPILE=false
+
+# check if we have a Desktop, if not, use home dir
+if [ ! -d "$DEST_DIR" ]; then
+    DEST_DIR=~/
+fi
 
 while getopts ':dqc' opt
 do
@@ -85,9 +91,9 @@ if [ "$NEBLIOD" = true ]; then
     if [ "$COMPILE" = true ]; then
         make -B -w -f makefile.unix
         strip nebliod
-        cp ./nebliod ~/Desktop/
+        cp ./nebliod $DEST_DIR
     else
-        cd ~/Desktop/
+        cd $DEST_DIR
         wget https://github.com/NeblioTeam/neblio/releases/download/v1.2/NEBL-Pi-raspbian-nebliod---2017-11-21
         mv NEBL-Pi-raspbian-nebliod---2017-11-21 nebliod
         sudo chmod 775 nebliod
@@ -98,9 +104,9 @@ if [ "$NEBLIOQT" = true ]; then
     if [ "$COMPILE" = true ]; then
         qmake "USE_UPNP=1" "USE_QRCODE=1" neblio-qt.pro
         make -B -w
-        cp ./neblio-qt ~/Desktop/
+        cp ./neblio-qt $DEST_DIR
     else
-        cd ~/Desktop/
+        cd $DEST_DIR
         wget https://github.com/NeblioTeam/neblio/releases/download/v1.2/NEBL-Pi-raspbian-neblio-qt---2017-11-21
         mv NEBL-Pi-raspbian-neblio-qt---2017-11-21 neblio-qt
         sudo chmod 775 neblio-qt
@@ -111,6 +117,8 @@ echo "==========================================================================
 echo "========================== NEBL-Pi Installer Finished =========================="
 echo ""
 echo "If there were no errors during download or compilation nebliod and/or neblio-qt"
-echo "should now be on your desktop. Enjoy!"
+echo "should now be on your desktop (if you are using a CLI-only version of Raspbian"
+echo "without a desktop the binaries have been copied to your home directory instead)."
+echo "Enjoy!"
 echo ""
 echo "================================================================================"
