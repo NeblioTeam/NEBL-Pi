@@ -98,10 +98,12 @@ if [ "$NEBLIOD" = true ]; then
         mv NEBL-Pi-raspbian-nebliod---2017-11-21 nebliod
         sudo chmod 775 nebliod
     fi
-    echo rpcuser=$USER >> ~/.neblio/neblio.conf
-    RPCPASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
-    echo rpcpassword=$RPCPASSWORD >> ~/.neblio/neblio.conf
-    echo rpcallowip=127.0.0.1 >> ~/.neblio/neblio.conf
+    if [ ! -f ~/.neblio/neblio.conf ]; then
+        echo rpcuser=$USER >> ~/.neblio/neblio.conf
+        RPCPASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+        echo rpcpassword=$RPCPASSWORD >> ~/.neblio/neblio.conf
+        echo rpcallowip=127.0.0.1 >> ~/.neblio/neblio.conf
+    fi
 fi
 cd ..
 if [ "$NEBLIOQT" = true ]; then
