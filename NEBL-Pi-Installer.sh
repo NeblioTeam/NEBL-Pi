@@ -52,7 +52,7 @@ do
 done
 
 # update and install dependencies
-sudo apt-get update
+sudo apt-get update -y
 sudo apt-get install build-essential -y
 sudo apt-get install libboost-all-dev -y
 sudo apt-get install libdb++-dev -y
@@ -74,7 +74,7 @@ if [ "$COMPILE" = true ]; then
     cd $NEBLIODIR
 
     # make sure git is installed and clone our repo, then create some necessary directories
-    sudo apt-get install git
+    sudo apt-get install git -y
     git clone https://github.com/NeblioTeam/neblio
     cd neblio/src
     mkdir obj
