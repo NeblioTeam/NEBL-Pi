@@ -151,7 +151,7 @@ fi
 
 if [ "$QUICKSYNC" = true ]; then
     if [ ! -f ~/.neblio/blk0001.dat ]; then
-        echo "Downloading Blockchain Data for Quick Sync"
+        echo "Downloading Blockchain Data for QuickSync"
 
         cd $HOME
         git clone https://github.com/NeblioTeam/neblio-blockchain-data
