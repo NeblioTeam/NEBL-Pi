@@ -36,6 +36,11 @@ if [ ! -d "$DEST_DIR" ]; then
     DEST_DIR=~/
 fi
 
+# check if we have ~/.neblio
+if [ ! -d "~/.neblio" ]; then
+    mkdir ~/.neblio
+fi
+
 # check if we are running on Raspbian Jessie
 if grep -q jessie "/etc/os-release"; then
     echo "Jessie detected, following Jessie install routine"
