@@ -15,7 +15,7 @@ echo "Pass -c to compile from source"
 echo "Pass -d to install nebliod"
 echo "Pass -q to install neblio-qt"
 echo "Pass -dq to install both"
-echo "Pass -x to disable Quick Sync"
+echo "Pass -x to disable QuickSync"
 echo ""
 echo "You can safely ignore all warnings during the compilation process, but if you"
 echo "run into any errors, please report them to info@nebl.io"
@@ -58,10 +58,14 @@ do
 	    echo "-d            Install nebliod (default false)"
 	    echo "-q            Install neblio-qt (default false)"
 	    echo "-dq           Install both"
-        echo "-x            Disable Quick Sync"
+        echo "-x            Disable QuickSync"
             exit 1;;
     esac
 done
+
+if [ "$NEBLIOD" = true ]; then
+    echo "Will use QuickSync"
+fi
 
 # update and install dependencies
 sudo apt-get update -y
