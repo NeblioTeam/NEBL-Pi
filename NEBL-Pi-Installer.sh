@@ -15,6 +15,7 @@ echo "Pass -c to compile from source"
 echo "Pass -d to install nebliod"
 echo "Pass -q to install neblio-qt"
 echo "Pass -dq to install both"
+echo "Pass -x to disable Quick Sync"
 echo ""
 echo "You can safely ignore all warnings during the compilation process, but if you"
 echo "run into any errors, please report them to info@nebl.io"
@@ -28,6 +29,7 @@ NEBLIOD=false
 NEBLIOQT=false
 COMPILE=false
 JESSIE=false
+QUICKSYNC=true
 
 # check if we have a Desktop, if not, use home dir
 if [ ! -d "$DEST_DIR" ]; then
@@ -40,7 +42,7 @@ if grep -q jessie "/etc/os-release"; then
     JESSIE=true
 fi
 
-while getopts ':dqc' opt
+while getopts ':dqcx' opt
 do
     case $opt in
         c) echo "Will compile all from source"
@@ -49,11 +51,14 @@ do
 	       NEBLIOD=true;;
         q) echo "Will Install neblio-qt"
 	       NEBLIOQT=true;;
+        x) echo "Disabling Quick Sync and using traditional sync"
+           QUICKSYNC=false;;
         \?) echo "ERROR: Invalid option: $USAGE"
         echo "-c            Compile all from source"
 	    echo "-d            Install nebliod (default false)"
 	    echo "-q            Install neblio-qt (default false)"
 	    echo "-dq           Install both"
+        echo "-x            Disable Quick Sync"
             exit 1;;
     esac
 done
@@ -77,6 +82,7 @@ else
     sudo aptitude install libssl1.0-dev -y
 fi
 sudo apt-get install wget -y
+sudo apt-get install git -y
 
 if [ "$COMPILE" = true ]; then
     # delete our src folder and then remake it
@@ -84,8 +90,7 @@ if [ "$COMPILE" = true ]; then
     mkdir $NEBLIODIR
     cd $NEBLIODIR
 
-    # make sure git is installed and clone our repo, then create some necessary directories
-    sudo apt-get install git -y
+    # clone our repo, then create some necessary directories
     git clone https://github.com/NeblioTeam/neblio
     cd neblio/src
     mkdir obj
@@ -139,6 +144,22 @@ if [ "$NEBLIOQT" = true ]; then
         sudo chmod 775 neblio-qt
     fi
 fi
+
+if [ "$QUICKSYNC" = true ]; then
+    if [ ! -f ~/.neblio/blk0001.dat ]; then
+        echo "Downloading Blockchain Data for Quick Sync"
+
+        cd $HOME
+        git clone https://github.com/NeblioTeam/neblio-blockchain-data
+        cd neblio-blockchain-data
+        cat neblio-blocklchain-data-archive.tar.gz.* > temp.tar.gz
+        tar -zxvf temp.tar.gz
+        cp -R ./data/* $HOME/.neblio/
+        cd ..
+        rm -rf neblio-blockchain-data
+    fi
+fi
+
 echo ""
 echo "================================================================================"
 echo "========================== NEBL-Pi Installer Finished =========================="
