@@ -114,7 +114,7 @@ fi
 # start our build
 if [ "$NEBLIOD" = true ]; then
     if [ "$COMPILE" = true ]; then
-        make -B -w -f makefile.unix
+        make "STATIC=1" -B -w -f makefile.unix
         strip nebliod
         cp ./nebliod $DEST_DIR
     else
@@ -138,7 +138,7 @@ fi
 cd ..
 if [ "$NEBLIOQT" = true ]; then
     if [ "$COMPILE" = true ]; then
-        qmake "USE_UPNP=1" "USE_QRCODE=1" neblio-qt.pro
+        qmake "USE_UPNP=1" "USE_QRCODE=1" "RELEASE=1" neblio-qt.pro
         make -B -w
         cp ./neblio-qt $DEST_DIR
     else
