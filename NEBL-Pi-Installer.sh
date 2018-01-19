@@ -120,11 +120,11 @@ if [ "$NEBLIOD" = true ]; then
     else
         cd $DEST_DIR
         if [ "$JESSIE" = true ]; then
-            wget https://github.com/NeblioTeam/neblio/releases/download/v1.2/NEBL-Pi-raspbian-jessie-nebliod---2017-11-21
-            mv NEBL-Pi-raspbian-jessie-nebliod---2017-11-21 nebliod
+            wget https://github.com/NeblioTeam/neblio/releases/download/v1.3/NEBL-Pi-raspbian-jessie-nebliod---2018-01-19
+            mv NEBL-Pi-raspbian-jessie-nebliod---2018-01-19 nebliod
         else
-            wget https://github.com/NeblioTeam/neblio/releases/download/v1.2/NEBL-Pi-raspbian-stretch-nebliod---2017-11-21
-            mv NEBL-Pi-raspbian-stretch-nebliod---2017-11-21 nebliod
+            wget https://github.com/NeblioTeam/neblio/releases/download/v1.3/NEBL-Pi-raspbian-stretch-nebliod---2018-01-19
+            mv NEBL-Pi-raspbian-stretch-nebliod---2018-01-19 nebliod
         fi
         sudo chmod 775 nebliod
     fi
@@ -144,11 +144,11 @@ if [ "$NEBLIOQT" = true ]; then
     else
         cd $DEST_DIR
         if [ "$JESSIE" = true ]; then
-            wget https://github.com/NeblioTeam/neblio/releases/download/v1.2/NEBL-Pi-raspbian-jessie-neblio-qt---2017-11-21
-            mv NEBL-Pi-raspbian-jessie-neblio-qt---2017-11-21 neblio-qt
+            wget https://github.com/NeblioTeam/neblio/releases/download/v1.3/NEBL-Pi-raspbian-jessie-neblio-qt---2018-01-19
+            mv NEBL-Pi-raspbian-jessie-neblio-qt---2018-01-19 neblio-qt
         else
-            wget https://github.com/NeblioTeam/neblio/releases/download/v1.2/NEBL-Pi-raspbian-stretch-neblio-qt---2017-11-21
-            mv NEBL-Pi-raspbian-stretch-neblio-qt---2017-11-21 neblio-qt
+            wget https://github.com/NeblioTeam/neblio/releases/download/v1.3/NEBL-Pi-raspbian-stretch-neblio-qt---2018-01-19
+            mv NEBL-Pi-raspbian-stretch-neblio-qt---2018-01-19 neblio-qt
         fi
         sudo chmod 775 neblio-qt
     fi
