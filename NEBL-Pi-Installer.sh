@@ -73,6 +73,11 @@ do
     esac
 done
 
+# get sudo
+if [ "$COMPILE" = true ]; then
+    sudo whoami
+fi
+
 if [ "$QUICKSYNC" = true ]; then
     echo "Will use QuickSync"
 fi
