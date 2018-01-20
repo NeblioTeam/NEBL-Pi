@@ -73,7 +73,7 @@ do
     esac
 done
 
-if [ "$NEBLIOD" = true ]; then
+if [ "$QUICKSYNC" = true ]; then
     echo "Will use QuickSync"
 fi
 
