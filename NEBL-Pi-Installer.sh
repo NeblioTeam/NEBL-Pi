@@ -47,11 +47,6 @@ if grep -q jessie "/etc/os-release"; then
     JESSIE=true
 fi
 
-# get sudo
-if [ "$COMPILE" = true ]; then
-    sudo whoami
-fi
-
 while getopts ':dqcx' opt
 do
     case $opt in
