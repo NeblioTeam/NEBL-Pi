@@ -124,9 +124,8 @@ if [ "$NEBLIOD" = true ]; then
         cp ./nebliod $DEST_DIR
     else
         cd $DEST_DIR
-            wget https://github.com/NeblioTeam/neblio/releases/download/v1.3/NEBL-Pi-raspbian-nebliod---2018-01-19
-            mv NEBL-Pi-raspbian-nebliod---2018-01-19 nebliod
-        fi
+        wget https://github.com/NeblioTeam/neblio/releases/download/v1.3/NEBL-Pi-raspbian-nebliod---2018-01-19
+        mv NEBL-Pi-raspbian-nebliod---2018-01-19 nebliod
         sudo chmod 775 nebliod
     fi
     if [ ! -f ~/.neblio/neblio.conf ]; then
@@ -150,9 +149,8 @@ if [ "$NEBLIOQT" = true ]; then
         cp ./neblio-qt $DEST_DIR
     else
         cd $DEST_DIR
-            wget https://github.com/NeblioTeam/neblio/releases/download/v1.3/NEBL-Pi-raspbian-neblio-qt---2018-01-19
-            mv NEBL-Pi-raspbian-neblio-qt---2018-01-19 neblio-qt
-        fi
+        wget https://github.com/NeblioTeam/neblio/releases/download/v1.3/NEBL-Pi-raspbian-neblio-qt---2018-01-19
+        mv NEBL-Pi-raspbian-neblio-qt---2018-01-19 neblio-qt
         sudo chmod 775 neblio-qt
     fi
 fi
