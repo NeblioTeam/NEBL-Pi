@@ -47,6 +47,11 @@ if grep -q jessie "/etc/os-release"; then
     JESSIE=true
 fi
 
+# get sudo
+if [ "$COMPILE" = true ]; then
+    sudo whoami
+fi
+
 while getopts ':dqcx' opt
 do
     case $opt in
@@ -138,6 +143,12 @@ fi
 cd ..
 if [ "$NEBLIOQT" = true ]; then
     if [ "$COMPILE" = true ]; then
+        wget 'https://fukuchi.org/works/qrencode/qrencode-3.4.4.tar.bz2'
+        tar -xvf qrencode-3.4.4.tar.bz2 
+        cd qrencode-3.4.4/
+        ./configure --enable-static --disable-shared --without-tools --disable-dependency-tracking
+        sudo make install
+	cd ..
         qmake "USE_UPNP=1" "USE_QRCODE=1" "RELEASE=1" neblio-qt.pro
         make -B -w
         cp ./neblio-qt $DEST_DIR
