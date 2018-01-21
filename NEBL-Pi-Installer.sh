@@ -96,10 +96,7 @@ if [ "$COMPILE" = true ]; then
         sudo apt-get install qtbase5-dev-tools -y
         sudo apt-get install qttools5-dev-tools -y
     fi
-    sudo apt-get install git -y
 fi
-
-sudo apt-get install wget -y
 
 if [ "$COMPILE" = true ]; then
     # delete our src folder and then remake it
@@ -171,6 +168,12 @@ if [ "$QUICKSYNC" = true ]; then
         cd ..
         rm -rf neblio-blockchain-data
     fi
+fi
+
+if [ "$NEBLIOQT" = true ]; then
+    echo ""
+    echo "Starting neblio-qt"
+    $HOME/Desktop/neblio-qt
 fi
 
 echo ""
