@@ -173,7 +173,7 @@ fi
 if [ "$NEBLIOQT" = true ]; then
     echo ""
     echo "Starting neblio-qt"
-    $HOME/Desktop/neblio-qt
+    $HOME/Desktop/neblio-qt &
 fi
 
 echo ""
@@ -186,3 +186,4 @@ echo "without a desktop the binaries have been copied to your home directory ins
 echo "Enjoy!"
 echo ""
 echo "================================================================================"
+read -p "Press any key to close this window..."
