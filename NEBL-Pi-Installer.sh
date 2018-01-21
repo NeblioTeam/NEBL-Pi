@@ -173,7 +173,7 @@ fi
 if [ "$NEBLIOQT" = true ]; then
     echo ""
     echo "Starting neblio-qt"
-    $HOME/Desktop/neblio-qt &
+    nohup $HOME/Desktop/neblio-qt > /dev/null &
 fi
 
 echo ""
