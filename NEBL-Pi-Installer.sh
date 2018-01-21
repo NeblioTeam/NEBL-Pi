@@ -78,25 +78,25 @@ if [ "$QUICKSYNC" = true ]; then
 fi
 
 # update and install dependencies
-sudo apt-get update -y
-sudo apt-get install build-essential -y
-sudo apt-get install libboost-all-dev -y
-sudo apt-get install libdb++-dev -y
-sudo apt-get install libminiupnpc-dev -y
-sudo apt-get install libqrencode-dev -y
-if [ "$NEBLIOQT" = true ]; then
-    sudo apt-get install qt5-default -y
-    sudo apt-get install qt5-qmake -y
-    sudo apt-get install qtbase5-dev-tools -y
-    sudo apt-get install qttools5-dev-tools -y
+if [ "$COMPILE" = true ]; then
+    sudo apt-get update -y
+    sudo apt-get install build-essential -y
+    sudo apt-get install libboost-all-dev -y
+    sudo apt-get install libdb++-dev -y
+    sudo apt-get install libminiupnpc-dev -y
+    sudo apt-get install libqrencode-dev -y
+    if [ "$JESSIE" = true ]; then
+        sudo apt-get install libssl-dev -y
+    else
+        sudo aptitude install libssl1.0-dev -y
+    fi
+    if [ "$NEBLIOQT" = true ]; then
+        sudo apt-get install qt5-default -y
+        sudo apt-get install qt5-qmake -y
+        sudo apt-get install qtbase5-dev-tools -y
+        sudo apt-get install qttools5-dev-tools -y
+    fi
 fi
-if [ "$JESSIE" = true ]; then
-    sudo apt-get install libssl-dev -y
-else
-    sudo aptitude install libssl1.0-dev -y
-fi
-sudo apt-get install wget -y
-sudo apt-get install git -y
 
 if [ "$COMPILE" = true ]; then
     # delete our src folder and then remake it
@@ -168,6 +168,12 @@ if [ "$QUICKSYNC" = true ]; then
         cd ..
         rm -rf neblio-blockchain-data
     fi
+fi
+
+if [ "$NEBLIOQT" = true ]; then
+    echo ""
+    echo "Starting neblio-qt"
+    $HOME/Desktop/neblio-qt
 fi
 
 echo ""
