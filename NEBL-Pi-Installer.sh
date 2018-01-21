@@ -78,31 +78,28 @@ if [ "$QUICKSYNC" = true ]; then
 fi
 
 # update and install dependencies
-sudo apt-get update -y
 if [ "$COMPILE" = true ]; then
+    sudo apt-get update -y
     sudo apt-get install build-essential -y
     sudo apt-get install libboost-all-dev -y
     sudo apt-get install libdb++-dev -y
     sudo apt-get install libminiupnpc-dev -y
     sudo apt-get install libqrencode-dev -y
-fi
-if [ "$NEBLIOQT" = true ]; then
-    sudo apt-get install qt5-default -y
-    if [ "$COMPILE" = true ]; then
-        sudo apt-get install qt5-qmake -y
-        sudo apt-get install qtbase5-dev-tools -y
-        sudo apt-get install qttools5-dev-tools -y
-    fi
-fi
-if [ "$COMPILE" = true ]; then
     if [ "$JESSIE" = true ]; then
         sudo apt-get install libssl-dev -y
     else
         sudo aptitude install libssl1.0-dev -y
     fi
+    if [ "$NEBLIOQT" = true ]; then
+        sudo apt-get install qt5-default -y
+        sudo apt-get install qt5-qmake -y
+        sudo apt-get install qtbase5-dev-tools -y
+        sudo apt-get install qttools5-dev-tools -y
+    fi
+    sudo apt-get install git -y
 fi
+
 sudo apt-get install wget -y
-sudo apt-get install git -y
 
 if [ "$COMPILE" = true ]; then
     # delete our src folder and then remake it
