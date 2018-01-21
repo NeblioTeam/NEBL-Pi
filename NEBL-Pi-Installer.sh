@@ -79,21 +79,27 @@ fi
 
 # update and install dependencies
 sudo apt-get update -y
-sudo apt-get install build-essential -y
-sudo apt-get install libboost-all-dev -y
-sudo apt-get install libdb++-dev -y
-sudo apt-get install libminiupnpc-dev -y
-sudo apt-get install libqrencode-dev -y
+if [ "$COMPILE" = true ];
+    sudo apt-get install build-essential -y
+    sudo apt-get install libboost-all-dev -y
+    sudo apt-get install libdb++-dev -y
+    sudo apt-get install libminiupnpc-dev -y
+    sudo apt-get install libqrencode-dev -y
+fi
 if [ "$NEBLIOQT" = true ]; then
     sudo apt-get install qt5-default -y
-    sudo apt-get install qt5-qmake -y
-    sudo apt-get install qtbase5-dev-tools -y
-    sudo apt-get install qttools5-dev-tools -y
+    if [ "$COMPILE" = true ];
+        sudo apt-get install qt5-qmake -y
+        sudo apt-get install qtbase5-dev-tools -y
+        sudo apt-get install qttools5-dev-tools -y
+    fi
 fi
-if [ "$JESSIE" = true ]; then
-    sudo apt-get install libssl-dev -y
-else
-    sudo aptitude install libssl1.0-dev -y
+if [ "$COMPILE" = true ];
+    if [ "$JESSIE" = true ]; then
+        sudo apt-get install libssl-dev -y
+    else
+        sudo aptitude install libssl1.0-dev -y
+    fi
 fi
 sudo apt-get install wget -y
 sudo apt-get install git -y
