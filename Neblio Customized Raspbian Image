@@ -1,0 +1,9 @@
+This SD Card image is a customized image of Raspbian Stretch Desktop v2017-11-29
+
+Changes:
+* Neblio Desktop Wallpaper
+* Install-neblio-qt.sh placed on desktop for one-click installation of the latest neblio-qt version
+
+Download Link (Google Drive): https://drive.google.com/file/d/1RcgBIa-4tnMZBCuENnoZIhuTrc1XT9lr/view?usp=sharing
+SHA-256 of 2017-11-29-raspbian-stretch-neblio-custom.zip: 3c2cb270697d6f34a268be74bca0ce918af1886fad182e5f6c7cc5ea4ca43c7b
+SHA-256 of 2017-11-29-raspbian-stretch-neblio-custom.img: e352357bd975178fb8da8b91f7e40150a823c6cb5f3f3beedfebd9cbe44dd304
