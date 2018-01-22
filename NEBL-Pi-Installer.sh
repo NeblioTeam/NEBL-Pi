@@ -174,7 +174,7 @@ if [ "$NEBLIOQT" = true ]; then
     echo ""
     echo "Starting neblio-qt"
     sleep 5
-    nohup $HOME/Desktop/neblio-qt > /dev/null &
+    nohup $DEST_DIR/neblio-qt > /dev/null &
     sleep 5
 fi
 
