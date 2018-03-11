@@ -85,6 +85,7 @@ if [ "$COMPILE" = true ]; then
     sudo apt-get install libdb++-dev -y
     sudo apt-get install libminiupnpc-dev -y
     sudo apt-get install libqrencode-dev -y
+    sudo apt-get install libcurl4-openssl-dev -y
     if [ "$JESSIE" = true ]; then
         sudo apt-get install libssl-dev -y
     else
