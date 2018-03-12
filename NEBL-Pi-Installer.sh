@@ -1,5 +1,5 @@
 #!/bin/bash
-#NEBL-Pi Installer v0.4.1 for Neblio Core v1.3.1
+#NEBL-Pi Installer v0.4.1 for Neblio Core v1.4.0
 
 echo "================================================================================"
 echo "=================== Welcome to the Ofiicial NEBL-Pi Installer =================="
@@ -125,8 +125,8 @@ if [ "$NEBLIOD" = true ]; then
         cp ./nebliod $DEST_DIR
     else
         cd $DEST_DIR
-        wget https://github.com/NeblioTeam/neblio/releases/download/v1.3.1/NEBL-Pi-raspbian-nebliod---2018-01-20
-        mv NEBL-Pi-raspbian-nebliod---2018-01-20 nebliod
+        wget https://github.com/NeblioTeam/neblio/releases/download/v1.4/NEBL-Pi-raspbian-nebliod---2018-03-11
+        mv NEBL-Pi-raspbian-nebliod---2018-03-11 nebliod
         sudo chmod 775 nebliod
     fi
     if [ ! -f ~/.neblio/neblio.conf ]; then
@@ -150,8 +150,8 @@ if [ "$NEBLIOQT" = true ]; then
         cp ./neblio-qt $DEST_DIR
     else
         cd $DEST_DIR
-        wget https://github.com/NeblioTeam/neblio/releases/download/v1.3.1/NEBL-Pi-raspbian-neblio-qt---2018-01-20
-        mv NEBL-Pi-raspbian-neblio-qt---2018-01-20 neblio-qt
+        wget https://github.com/NeblioTeam/neblio/releases/download/v1.4/NEBL-Pi-raspbian-neblio-qt---2018-03-11
+        mv NEBL-Pi-raspbian-neblio-qt---2018-03-11 neblio-qt
         sudo chmod 775 neblio-qt
     fi
 fi
