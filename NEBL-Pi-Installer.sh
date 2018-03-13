@@ -43,8 +43,9 @@ fi
 
 # check if we are running on Raspbian Jessie
 if grep -q jessie "/etc/os-release"; then
-    echo "Jessie detected, following Jessie install routine"
+    echo "Jessie detected, following Jessie compile and install routine"
     JESSIE=true
+    COMPILE=true
 fi
 
 while getopts ':dqcx' opt
