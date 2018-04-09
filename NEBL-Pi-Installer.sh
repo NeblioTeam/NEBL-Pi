@@ -108,7 +108,7 @@ if [ "$COMPILE" = true ]; then
 
     # clone our repo, then create some necessary directories
     git clone https://github.com/NeblioTeam/neblio
-    cd neblio/src
+    cd neblio/wallet
     mkdir obj
     cd obj
     mkdir zerocoin
@@ -148,7 +148,7 @@ if [ "$NEBLIOQT" = true ]; then
 	cd ..
         qmake "USE_UPNP=1" "USE_QRCODE=1" "RELEASE=1" neblio-qt.pro
         make -B -w
-        cp ./neblio-qt $DEST_DIR
+        cp ./wallet/neblio-qt $DEST_DIR
     else
         cd $DEST_DIR
         wget https://github.com/NeblioTeam/neblio/releases/download/v1.4/NEBL-Pi-raspbian-neblio-qt---2018-03-11
