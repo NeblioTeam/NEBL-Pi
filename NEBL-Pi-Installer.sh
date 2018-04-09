@@ -173,11 +173,13 @@ if [ "$QUICKSYNC" = true ]; then
 fi
 
 if [ "$NEBLIOQT" = true ]; then
-    echo ""
-    echo "Starting neblio-qt"
-    sleep 5
-    nohup $DEST_DIR/neblio-qt > /dev/null &
-    sleep 5
+    if [ -d "~/Desktop" ]; then
+        echo ""
+        echo "Starting neblio-qt"
+        sleep 5
+        nohup $DEST_DIR/neblio-qt > /dev/null &
+        sleep 5
+    fi
 fi
 
 echo ""
