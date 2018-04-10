@@ -146,7 +146,7 @@ if [ "$NEBLIOQT" = true ]; then
         ./configure --enable-static --disable-shared --without-tools --disable-dependency-tracking
         sudo make install
 	cd ..
-        qmake "USE_UPNP=1" "USE_QRCODE=1" "RELEASE=1" neblio-qt.pro
+        qmake "USE_UPNP=1" "USE_QRCODE=1" "RELEASE=1" neblio-wallet.pro
         make -B -w
         cp ./wallet/neblio-qt $DEST_DIR
     else
