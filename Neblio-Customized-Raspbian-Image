@@ -1,9 +1,26 @@
-This SD Card image is a customized image of Raspbian Stretch Desktop v2017-11-29
+This SD Card image is a customized image of Raspbian Stretch Desktop v2018-06-27
+
+Steps to create:
+* Download latest raspbian image
+* sudo kpartx -a -v raspbian-stretch.img
+* sudo mkdir -p /mnt/pi
+* sudo mount /dev/mapper/loop0p2 /mnt/pi
+* cd /mnt/pi/usr/share/rpd-wallpaper/
+* sudo rm road.jpg
+* sudo wget https://github.com/NeblioTeam/NEBL-Pi/raw/master/Neblio-Desktop.jpg -O road.jpg
+* cd /mnt/pi/home/pi
+* mkdir -p Desktop
+* cd Desktop
+* wget https://raw.githubusercontent.com/NeblioTeam/NEBL-Pi/master/Install-neblio-qt.sh
+* chmod 755 Install-neblio-qt.sh
+* cd && sudo umount /mnt/pi
+* sudo kpartx -d -v raspbian-stretch.img
+* sudo rm -rf /mnt/pi
 
 Changes:
 * Neblio Desktop Wallpaper
 * Install-neblio-qt.sh placed on desktop for one-click installation of the latest neblio-qt version
 
-Download Link (Google Drive): https://drive.google.com/file/d/1RcgBIa-4tnMZBCuENnoZIhuTrc1XT9lr/view?usp=sharing
-SHA-256 of 2017-11-29-raspbian-stretch-neblio-custom.zip: 3c2cb270697d6f34a268be74bca0ce918af1886fad182e5f6c7cc5ea4ca43c7b
-SHA-256 of 2017-11-29-raspbian-stretch-neblio-custom.img: e352357bd975178fb8da8b91f7e40150a823c6cb5f3f3beedfebd9cbe44dd304
+Download Link (Google Drive): https://drive.google.com/file/d/1US0AlZyJfwxjHQ5-J76UozTIj8Yb9_Vr/view?usp=sharing
+SHA-256 of 2018-06-27-raspbian-stretch-neblio-custom.zip: fdeb7e73fdf8c15e6023dc2984525b5660829dbe4cdaa6c5f34730153df2de89
+SHA-256 of 2018-06-27-raspbian-stretch-neblio-custom.img: 890a5ec9570cd0e378caf40e00eec6e0c27b92ab93b3651dc7dde1cf3f2b7b71
