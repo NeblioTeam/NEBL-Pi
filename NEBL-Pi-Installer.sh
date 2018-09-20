@@ -1,5 +1,5 @@
 #!/bin/bash
-#NEBL-Pi Installer v0.4.1 for Neblio Core v1.4.0
+#NEBL-Pi Installer v0.4.1 for Neblio Core v1.5.2
 
 echo "================================================================================"
 echo "=================== Welcome to the Ofiicial NEBL-Pi Installer =================="
@@ -107,7 +107,7 @@ if [ "$COMPILE" = true ]; then
     cd $NEBLIODIR
 
     # clone our repo, then create some necessary directories
-    git clone https://github.com/NeblioTeam/neblio
+    git clone -b v1.5.2-temp-branch https://github.com/NeblioTeam/neblio
     cd neblio/wallet
     mkdir obj
     cd obj
