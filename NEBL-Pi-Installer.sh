@@ -161,7 +161,7 @@ if [ "$QUICKSYNC" = true ]; then
 	
     echo "Running the Neblio QuickSync container to copy the Neblio Blockchain"
     sudo docker pull neblioteam/neblio-quicksync-rpi
-    sudo docker run -i --rm --name neblio-quicksync-rpi -v $HOME/.neblio:/root/.neblio neblioteam/neblio-quicksync-rpi
+    sudo docker run -i --rm --name neblio-quicksync-rpi -v $HOME/.neblio:/root/.neblio neblioteam/neblio-quicksync-rpi; exit 0
 fi
 
 if [ "$NEBLIOQT" = true ]; then
