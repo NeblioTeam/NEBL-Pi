@@ -2,7 +2,7 @@
 #NEBL-Pi Installer v0.5.0 for Neblio Core v1.5.2
 
 echo "================================================================================"
-echo "=================== Welcome to the Ofiicial NEBL-Pi Installer =================="
+echo "=================== Welcome to the Official NEBL-Pi Installer =================="
 echo "This script will install all necessary dependencies to run or compile nebliod"
 echo "and/or neblio-qt, download the binaries or source code, and then optionally"
 echo "compile nebliod, neblio-qt or both. nebliod and/or neblio-qt will be copied to"
