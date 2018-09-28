@@ -36,10 +36,8 @@ if [ ! -d "$DEST_DIR" ]; then
     DEST_DIR=~/
 fi
 
-# check if we have ~/.neblio
-if [ ! -d "~/.neblio" ]; then
-    mkdir ~/.neblio
-fi
+# create ~/.neblio if it does not exist
+mkdir -p ~/.neblio
 
 # check if we are running on Raspbian Jessie
 if grep -q jessie "/etc/os-release"; then
@@ -54,17 +52,17 @@ do
         c) echo "Will compile all from source"
            COMPILE=true;;
         d) echo "Will Install nebliod"
-	       NEBLIOD=true;;
+	   NEBLIOD=true;;
         q) echo "Will Install neblio-qt"
-	       NEBLIOQT=true;;
+	   NEBLIOQT=true;;
         x) echo "Disabling Quick Sync and using traditional sync"
            QUICKSYNC=false;;
         \?) echo "ERROR: Invalid option: $USAGE"
-        echo "-c            Compile all from source"
+            echo "-c            Compile all from source"
 	    echo "-d            Install nebliod (default false)"
 	    echo "-q            Install neblio-qt (default false)"
 	    echo "-dq           Install both"
-        echo "-x            Disable QuickSync"
+            echo "-x            Disable QuickSync"
             exit 1;;
     esac
 done
@@ -167,7 +165,7 @@ if [ "$QUICKSYNC" = true ]; then
 fi
 
 if [ "$NEBLIOQT" = true ]; then
-    if [ -d "~/Desktop" ]; then
+    if [ -d ~/Desktop ]; then
         echo ""
         echo "Starting neblio-qt"
         sleep 5
