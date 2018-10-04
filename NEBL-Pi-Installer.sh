@@ -157,7 +157,7 @@ fi
 
 if [ "$QUICKSYNC" = true ]; then
     echo "Installing Docker for QuickSync"
-    curl -fsSL get.docker.com -o get-docker.sh && sh get-docker.sh && rm get-docker.sh
+    sudo curl -fsSL get.docker.com -o get-docker.sh && sudo sh get-docker.sh && sudo rm get-docker.sh
 	
     echo "Running the Neblio QuickSync container to copy the Neblio Blockchain"
     sudo docker pull neblioteam/neblio-quicksync-rpi
