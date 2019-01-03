@@ -106,9 +106,9 @@ if [ "$COMPILE" = true ]; then
     git clone -b master https://github.com/NeblioTeam/neblio
     python neblio/build_scripts/CompileOpenSSL-Linux.py
     python neblio/build_scripts/CompileCurl-Linux.py
-    export OPENSSL_INCLUDE_PATH=$HOME/openssl_build/include/
-    export OPENSSL_LIB_PATH=$HOME/openssl_build/lib/
-    export PKG_CONFIG_PATH=$HOME/curl_build/lib/pkgconfig/
+    export OPENSSL_INCLUDE_PATH=$NEBLIODIR/openssl_build/include/
+    export OPENSSL_LIB_PATH=$NEBLIODIR/openssl_build/lib/
+    export PKG_CONFIG_PATH=$NEBLIODIR/curl_build/lib/pkgconfig/
     cd neblio/wallet
 fi
 
@@ -142,9 +142,9 @@ if [ "$NEBLIOQT" = true ]; then
         sudo make install
 	cd ..
         qmake "USE_UPNP=1" "USE_QRCODE=1" "RELEASE=1" \
-        "OPENSSL_INCLUDE_PATH=$HOME/openssl_build/include/" \
-        "OPENSSL_LIB_PATH=$HOME/openssl_build/lib/" \
-        "PKG_CONFIG_PATH=$HOME/curl_build/lib/pkgconfig/" neblio-wallet.pro
+        "OPENSSL_INCLUDE_PATH=$NEBLIODIR/openssl_build/include/" \
+        "OPENSSL_LIB_PATH=$NEBLIODIR/openssl_build/lib/" \
+        "PKG_CONFIG_PATH=$NEBLIODIR/curl_build/lib/pkgconfig/" neblio-wallet.pro
         make -B -w
         cp ./wallet/neblio-qt $DEST_DIR
     else
