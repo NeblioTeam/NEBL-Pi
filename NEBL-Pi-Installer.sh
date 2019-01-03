@@ -59,9 +59,9 @@ do
            QUICKSYNC=false;;
         \?) echo "ERROR: Invalid option: $USAGE"
             echo "-c            Compile all from source"
-	        echo "-d            Install nebliod (default false)"
-	        echo "-q            Install neblio-qt (default false)"
-	        echo "-dq           Install both"
+            echo "-d            Install nebliod (default false)"
+            echo "-q            Install neblio-qt (default false)"
+            echo "-dq           Install both"
             echo "-x            Disable QuickSync"
         exit 1;;
     esac
@@ -139,7 +139,7 @@ if [ "$NEBLIOQT" = true ]; then
         cd qrencode-3.4.4/
         ./configure --enable-static --disable-shared --without-tools --disable-dependency-tracking
         sudo make install
-	    cd ..
+        cd ..
         qmake "USE_UPNP=1" "USE_QRCODE=1" "RELEASE=1" \
         "OPENSSL_INCLUDE_PATH=$NEBLIODIR/openssl_build/include/" \
         "OPENSSL_LIB_PATH=$NEBLIODIR/openssl_build/lib/" \
