@@ -84,7 +84,6 @@ if [ "$COMPILE" = true ]; then
     sudo apt-get install libdb++-dev -y
     sudo apt-get install libminiupnpc-dev -y
     sudo apt-get install libqrencode-dev -y
-    sudo apt-get install ibqrencode-dev -y
     sudo apt-get install libldap2-dev -y
     sudo apt-get install libidn11-dev -y
     sudo apt-get install librtmp-dev -y
