@@ -1,5 +1,5 @@
 #!/bin/bash
-#NEBL-Pi Installer v0.5.0 for Neblio Core v1.5.2
+#NEBL-Pi Installer v0.6.0 for Neblio Core v2.0
 
 echo "================================================================================"
 echo "=================== Welcome to the Official NEBL-Pi Installer =================="
@@ -161,7 +161,7 @@ if [ "$QUICKSYNC" = true ]; then
 
     echo "Running the Neblio QuickSync container to copy the Neblio Blockchain"
     sudo docker pull neblioteam/neblio-quicksync-rpi
-    sudo docker run -i --rm --name neblio-quicksync-rpi -v $HOME/.neblio:/root/.neblio neblioteam/neblio-quicksync-rpi
+    /bin/bash -c "sudo docker run -i --rm --name neblio-quicksync-rpi -v $HOME/.neblio:/root/.neblio neblioteam/neblio-quicksync-rpi"
 fi
 
 if [ "$NEBLIOQT" = true ]; then
