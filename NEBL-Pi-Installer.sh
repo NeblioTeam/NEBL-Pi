@@ -1,8 +1,8 @@
 #!/bin/bash
-#NEBL-Pi Installer v0.4.1 for Neblio Core v1.5.2
+#NEBL-Pi Installer v0.5.0 for Neblio Core v1.5.2
 
 echo "================================================================================"
-echo "=================== Welcome to the Ofiicial NEBL-Pi Installer =================="
+echo "=================== Welcome to the Official NEBL-Pi Installer =================="
 echo "This script will install all necessary dependencies to run or compile nebliod"
 echo "and/or neblio-qt, download the binaries or source code, and then optionally"
 echo "compile nebliod, neblio-qt or both. nebliod and/or neblio-qt will be copied to"
@@ -36,10 +36,8 @@ if [ ! -d "$DEST_DIR" ]; then
     DEST_DIR=~/
 fi
 
-# check if we have ~/.neblio
-if [ ! -d "~/.neblio" ]; then
-    mkdir ~/.neblio
-fi
+# create ~/.neblio if it does not exist
+mkdir -p ~/.neblio
 
 # check if we are running on Raspbian Jessie
 if grep -q jessie "/etc/os-release"; then
@@ -54,17 +52,17 @@ do
         c) echo "Will compile all from source"
            COMPILE=true;;
         d) echo "Will Install nebliod"
-	       NEBLIOD=true;;
+	   NEBLIOD=true;;
         q) echo "Will Install neblio-qt"
-	       NEBLIOQT=true;;
+	   NEBLIOQT=true;;
         x) echo "Disabling Quick Sync and using traditional sync"
            QUICKSYNC=false;;
         \?) echo "ERROR: Invalid option: $USAGE"
-        echo "-c            Compile all from source"
+            echo "-c            Compile all from source"
 	    echo "-d            Install nebliod (default false)"
 	    echo "-q            Install neblio-qt (default false)"
 	    echo "-dq           Install both"
-        echo "-x            Disable QuickSync"
+            echo "-x            Disable QuickSync"
             exit 1;;
     esac
 done
@@ -86,12 +84,10 @@ if [ "$COMPILE" = true ]; then
     sudo apt-get install libdb++-dev -y
     sudo apt-get install libminiupnpc-dev -y
     sudo apt-get install libqrencode-dev -y
-    sudo apt-get install libcurl4-openssl-dev -y
-    if [ "$JESSIE" = true ]; then
-        sudo apt-get install libssl-dev -y
-    else
-        sudo aptitude install libssl1.0-dev -y
-    fi
+    sudo apt-get install ibqrencode-dev -y
+    sudo apt-get install libldap2-dev -y
+    sudo apt-get install libidn11-dev -y
+    sudo apt-get install librtmp-dev -y
     if [ "$NEBLIOQT" = true ]; then
         sudo apt-get install qt5-default -y
         sudo apt-get install qt5-qmake -y
@@ -107,15 +103,13 @@ if [ "$COMPILE" = true ]; then
     cd $NEBLIODIR
 
     # clone our repo, then create some necessary directories
-    git clone -b v1.5.2-temp-branch https://github.com/NeblioTeam/neblio
+    git clone -b master https://github.com/NeblioTeam/neblio
+    python neblio/build_scripts/CompileOpenSSL-Linux.py
+    python neblio/build_scripts/CompileCurl-Linux.py
+    export OPENSSL_INCLUDE_PATH=$HOME/openssl_build/include/
+    export OPENSSL_LIB_PATH=$HOME/openssl_build/lib/
+    export PKG_CONFIG_PATH=$HOME/curl_build/lib/pkgconfig/
     cd neblio/wallet
-    mkdir obj
-    cd obj
-    mkdir zerocoin
-    cd ..
-    cd leveldb
-    chmod 755 *
-    cd ..
 fi
 
 # start our build
@@ -126,8 +120,9 @@ if [ "$NEBLIOD" = true ]; then
         cp ./nebliod $DEST_DIR
     else
         cd $DEST_DIR
-	wget https://github.com/NeblioTeam/neblio/releases/download/v1.5.2/NEBL-Pi-raspbian-nebliod---2018-09-19
-        mv NEBL-Pi-raspbian-nebliod---2018-09-19 nebliod
+	wget https://github.com/NeblioTeam/neblio/releases/download/v2.0/2018-12-31---v2.0-474d812---nebliod---RPi-raspbian-stretch.tar.gz
+        tar -xvf 2018-12-31---v2.0-474d812---nebliod---RPi-raspbian-stretch.tar.gz
+        rm 2018-12-31---v2.0-474d812---nebliod---RPi-raspbian-stretch.tar.gz
         sudo chmod 775 nebliod
     fi
     if [ ! -f ~/.neblio/neblio.conf ]; then
@@ -141,39 +136,37 @@ cd ..
 if [ "$NEBLIOQT" = true ]; then
     if [ "$COMPILE" = true ]; then
         wget 'https://fukuchi.org/works/qrencode/qrencode-3.4.4.tar.bz2'
-        tar -xvf qrencode-3.4.4.tar.bz2 
+        tar -xvf qrencode-3.4.4.tar.bz2
         cd qrencode-3.4.4/
         ./configure --enable-static --disable-shared --without-tools --disable-dependency-tracking
         sudo make install
 	cd ..
-        qmake "USE_UPNP=1" "USE_QRCODE=1" "RELEASE=1" neblio-wallet.pro
+        qmake "USE_UPNP=1" "USE_QRCODE=1" "RELEASE=1" \
+        "OPENSSL_INCLUDE_PATH=$HOME/openssl_build/include/" \
+        "OPENSSL_LIB_PATH=$HOME/openssl_build/lib/" \
+        "PKG_CONFIG_PATH=$HOME/curl_build/lib/pkgconfig/" neblio-wallet.pro
         make -B -w
         cp ./wallet/neblio-qt $DEST_DIR
     else
         cd $DEST_DIR
-        wget https://github.com/NeblioTeam/neblio/releases/download/v1.5.2/NEBL-Pi-raspbian-neblio-qt---2018-09-19
-        mv NEBL-Pi-raspbian-neblio-qt---2018-09-19 neblio-qt
+        wget https://github.com/NeblioTeam/neblio/releases/download/v2.0/2019-01-01---v2.0-474d812---neblio-Qt---RPi-raspbian-stretch.tar.gz
+        tar -xvf 2019-01-01---v2.0-474d812---neblio-Qt---RPi-raspbian-stretch.tar.gz
+        rm 2019-01-01---v2.0-474d812---neblio-Qt---RPi-raspbian-stretch.tar.gz
         sudo chmod 775 neblio-qt
     fi
 fi
 
 if [ "$QUICKSYNC" = true ]; then
-    if [ ! -f ~/.neblio/blk0001.dat ]; then
-        echo "Downloading Blockchain Data for QuickSync"
+    echo "Installing Docker for QuickSync"
+    sudo curl -fsSL get.docker.com -o get-docker.sh && sudo sh get-docker.sh && sudo rm get-docker.sh
 
-        cd $HOME
-        git clone https://github.com/NeblioTeam/neblio-blockchain-data
-        cd neblio-blockchain-data
-        cat neblio-blocklchain-data-archive.tar.gz.* > temp.tar.gz
-        tar -zxvf temp.tar.gz
-        cp -R ./data/* $HOME/.neblio/
-        cd ..
-        rm -rf neblio-blockchain-data
-    fi
+    echo "Running the Neblio QuickSync container to copy the Neblio Blockchain"
+    sudo docker pull neblioteam/neblio-quicksync-rpi
+    sudo docker run -i --rm --name neblio-quicksync-rpi -v $HOME/.neblio:/root/.neblio neblioteam/neblio-quicksync-rpi
 fi
 
 if [ "$NEBLIOQT" = true ]; then
-    if [ -d "~/Desktop" ]; then
+    if [ -d ~/Desktop ]; then
         echo ""
         echo "Starting neblio-qt"
         sleep 5
