@@ -41,7 +41,7 @@ mkdir -p ~/.neblio
 
 # check if we are running on Raspbian Jessie
 if grep -q jessie "/etc/os-release"; then
-    echo "Jessie detected, following Jessie compile and install routine"
+    echo "Jessie detected, following Jessie compile and install routine. Build will NOT be static"
     JESSIE=true
     COMPILE=true
 fi
@@ -93,6 +93,10 @@ if [ "$COMPILE" = true ]; then
         sudo apt-get install qtbase5-dev-tools -y
         sudo apt-get install qttools5-dev-tools -y
     fi
+    if [ "$JESSIE" = true ]; then
+        sudo apt-get install libcurl4-openssl-dev -y
+        sudo apt-get install libssl-dev -y
+    else
 fi
 
 if [ "$COMPILE" = true ]; then
@@ -103,18 +107,25 @@ if [ "$COMPILE" = true ]; then
 
     # clone our repo, then create some necessary directories
     git clone -b master https://github.com/NeblioTeam/neblio
-    python neblio/build_scripts/CompileOpenSSL-Linux.py
-    python neblio/build_scripts/CompileCurl-Linux.py
-    export OPENSSL_INCLUDE_PATH=$NEBLIODIR/openssl_build/include/
-    export OPENSSL_LIB_PATH=$NEBLIODIR/openssl_build/lib/
-    export PKG_CONFIG_PATH=$NEBLIODIR/curl_build/lib/pkgconfig/
+    
+    if [ "$JESSIE" = false ]; then
+        python neblio/build_scripts/CompileOpenSSL-Linux.py
+        python neblio/build_scripts/CompileCurl-Linux.py
+        export OPENSSL_INCLUDE_PATH=$NEBLIODIR/openssl_build/include/
+        export OPENSSL_LIB_PATH=$NEBLIODIR/openssl_build/lib/
+        export PKG_CONFIG_PATH=$NEBLIODIR/curl_build/lib/pkgconfig/
+    fi
     cd neblio/wallet
 fi
 
 # start our build
 if [ "$NEBLIOD" = true ]; then
     if [ "$COMPILE" = true ]; then
-        make "STATIC=1" -B -w -f makefile.unix
+        if [ "$JESSIE" = false ]; then
+            make "STATIC=1" -B -w -f makefile.unix
+	else
+	    make -B -w -f makefile.unix
+	fi
         strip nebliod
         cp ./nebliod $DEST_DIR
     else
@@ -140,10 +151,14 @@ if [ "$NEBLIOQT" = true ]; then
         ./configure --enable-static --disable-shared --without-tools --disable-dependency-tracking
         sudo make install
         cd ..
-        qmake "USE_UPNP=1" "USE_QRCODE=1" "RELEASE=1" \
-        "OPENSSL_INCLUDE_PATH=$NEBLIODIR/openssl_build/include/" \
-        "OPENSSL_LIB_PATH=$NEBLIODIR/openssl_build/lib/" \
-        "PKG_CONFIG_PATH=$NEBLIODIR/curl_build/lib/pkgconfig/" neblio-wallet.pro
+	if [ "$JESSIE" = false ]; then
+            qmake "USE_UPNP=1" "USE_QRCODE=1" "RELEASE=1" \
+            "OPENSSL_INCLUDE_PATH=$NEBLIODIR/openssl_build/include/" \
+            "OPENSSL_LIB_PATH=$NEBLIODIR/openssl_build/lib/" \
+            "PKG_CONFIG_PATH=$NEBLIODIR/curl_build/lib/pkgconfig/" neblio-wallet.pro
+	else
+	    qmake "USE_UPNP=1" "USE_QRCODE=1" "RELEASE=1" neblio-wallet.pro
+	fi
         make -B -w
         cp ./wallet/neblio-qt $DEST_DIR
     else
