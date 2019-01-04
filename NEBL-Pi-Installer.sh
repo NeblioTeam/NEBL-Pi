@@ -87,16 +87,16 @@ if [ "$COMPILE" = true ]; then
     sudo apt-get install libldap2-dev -y
     sudo apt-get install libidn11-dev -y
     sudo apt-get install librtmp-dev -y
+    if [ "$JESSIE" = true ]; then
+        sudo apt-get install libcurl4-openssl-dev -y
+        sudo apt-get install libssl-dev -y
+    fi
     if [ "$NEBLIOQT" = true ]; then
         sudo apt-get install qt5-default -y
         sudo apt-get install qt5-qmake -y
         sudo apt-get install qtbase5-dev-tools -y
         sudo apt-get install qttools5-dev-tools -y
     fi
-    if [ "$JESSIE" = true ]; then
-        sudo apt-get install libcurl4-openssl-dev -y
-        sudo apt-get install libssl-dev -y
-    else
 fi
 
 if [ "$COMPILE" = true ]; then
