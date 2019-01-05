@@ -41,9 +41,19 @@ mkdir -p ~/.neblio
 
 # check if we are running on Raspbian Jessie
 if grep -q jessie "/etc/os-release"; then
-    echo "Jessie detected, following Jessie compile and install routine. Build will NOT be static"
-    JESSIE=true
-    COMPILE=true
+    echo ""
+    echo "================================================================================"
+    echo "====================== Raspbian Jessie (Outdated) Detected ====================="
+    echo ""
+    echo "This install script is only compatible with Raspbian Stretch."
+    echo "Please upgrade to Raspbian Stretch (take a backup first!)"
+    echo ""
+    echo "In 30 seconds this we will open a webpage detailing how to upgrade."
+    echo ""
+    echo "================================================================================"
+    sleep 30
+    python -mwebbrowser https://linuxconfig.org/raspbian-gnu-linux-upgrade-from-jessie-to-raspbian-stretch-9
+    exit
 fi
 
 while getopts ':dqcx' opt
@@ -87,10 +97,6 @@ if [ "$COMPILE" = true ]; then
     sudo apt-get install libldap2-dev -y
     sudo apt-get install libidn11-dev -y
     sudo apt-get install librtmp-dev -y
-    if [ "$JESSIE" = true ]; then
-        sudo apt-get install libcurl4-openssl-dev -y
-        sudo apt-get install libssl-dev -y
-    fi
     if [ "$NEBLIOQT" = true ]; then
         sudo apt-get install qt5-default -y
         sudo apt-get install qt5-qmake -y
@@ -108,24 +114,18 @@ if [ "$COMPILE" = true ]; then
     # clone our repo, then create some necessary directories
     git clone -b master https://github.com/NeblioTeam/neblio
     
-    if [ "$JESSIE" = false ]; then
-        python neblio/build_scripts/CompileOpenSSL-Linux.py
-        python neblio/build_scripts/CompileCurl-Linux.py
-        export OPENSSL_INCLUDE_PATH=$NEBLIODIR/openssl_build/include/
-        export OPENSSL_LIB_PATH=$NEBLIODIR/openssl_build/lib/
-        export PKG_CONFIG_PATH=$NEBLIODIR/curl_build/lib/pkgconfig/
-    fi
+    python neblio/build_scripts/CompileOpenSSL-Linux.py
+    python neblio/build_scripts/CompileCurl-Linux.py
+    export OPENSSL_INCLUDE_PATH=$NEBLIODIR/openssl_build/include/
+    export OPENSSL_LIB_PATH=$NEBLIODIR/openssl_build/lib/
+    export PKG_CONFIG_PATH=$NEBLIODIR/curl_build/lib/pkgconfig/
     cd neblio/wallet
 fi
 
 # start our build
 if [ "$NEBLIOD" = true ]; then
     if [ "$COMPILE" = true ]; then
-        if [ "$JESSIE" = false ]; then
-            make "STATIC=1" -B -w -f makefile.unix
-	else
-	    make -B -w -f makefile.unix
-	fi
+        make "STATIC=1" -B -w -f makefile.unix
         strip nebliod
         cp ./nebliod $DEST_DIR
     else
@@ -151,14 +151,10 @@ if [ "$NEBLIOQT" = true ]; then
         ./configure --enable-static --disable-shared --without-tools --disable-dependency-tracking
         sudo make install
         cd ..
-	if [ "$JESSIE" = false ]; then
-            qmake "USE_UPNP=1" "USE_QRCODE=1" "RELEASE=1" \
-            "OPENSSL_INCLUDE_PATH=$NEBLIODIR/openssl_build/include/" \
-            "OPENSSL_LIB_PATH=$NEBLIODIR/openssl_build/lib/" \
-            "PKG_CONFIG_PATH=$NEBLIODIR/curl_build/lib/pkgconfig/" neblio-wallet.pro
-	else
-	    qmake "USE_UPNP=1" "USE_QRCODE=1" "RELEASE=1" neblio-wallet.pro
-	fi
+        qmake "USE_UPNP=1" "USE_QRCODE=1" "RELEASE=1" \
+        "OPENSSL_INCLUDE_PATH=$NEBLIODIR/openssl_build/include/" \
+        "OPENSSL_LIB_PATH=$NEBLIODIR/openssl_build/lib/" \
+        "PKG_CONFIG_PATH=$NEBLIODIR/curl_build/lib/pkgconfig/" neblio-wallet.pro
         make -B -w
         cp ./wallet/neblio-qt $DEST_DIR
     else
