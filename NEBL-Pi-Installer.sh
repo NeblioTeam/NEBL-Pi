@@ -52,7 +52,7 @@ if grep -q jessie "/etc/os-release"; then
     echo ""
     echo "================================================================================"
     sleep 30
-    python -mwebbrowser https://linuxconfig.org/raspbian-gnu-linux-upgrade-from-jessie-to-raspbian-stretch-9
+    python -mwebbrowser https://www.raspberrypi.org/documentation/raspbian/updating.md
     exit
 fi
 
