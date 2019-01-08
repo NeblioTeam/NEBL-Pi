@@ -169,7 +169,8 @@ fi
 if [ "$QUICKSYNC" = true ]; then
     echo "Installing Docker for QuickSync"
     sudo curl -fsSL get.docker.com -o get-docker.sh && sudo sh get-docker.sh && sudo rm get-docker.sh
-    sudo apt-get install docker-ce=18.06.1~ce~3-0~raspbian -y # until https://github.com/moby/moby/issues/38175 is resolved
+    echo "If you have issues starting Docker, try running: sudo apt-get install docker-ce=18.06.1~ce~3-0~raspbian"
+    # until https://github.com/moby/moby/issues/38175 is resolved
 
     echo "Running the Neblio QuickSync container to copy the Neblio Blockchain"
     sudo docker pull neblioteam/neblio-quicksync-rpi
