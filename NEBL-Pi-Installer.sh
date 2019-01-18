@@ -97,6 +97,7 @@ if [ "$COMPILE" = true ]; then
     sudo apt-get install libldap2-dev -y
     sudo apt-get install libidn11-dev -y
     sudo apt-get install librtmp-dev -y
+    sudo apt-get install git -y
     if [ "$NEBLIOQT" = true ]; then
         sudo apt-get install qt5-default -y
         sudo apt-get install qt5-qmake -y
