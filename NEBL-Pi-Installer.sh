@@ -1,5 +1,5 @@
 #!/bin/bash
-#NEBL-Pi Installer v0.6.0 for Neblio Core v2.0
+#NEBL-Pi Installer v0.7.0 for Neblio Core v2.1
 
 echo "================================================================================"
 echo "=================== Welcome to the Official NEBL-Pi Installer =================="
@@ -15,7 +15,6 @@ echo "Pass -c to compile from source"
 echo "Pass -d to install nebliod"
 echo "Pass -q to install neblio-qt"
 echo "Pass -dq to install both"
-echo "Pass -x to disable QuickSync"
 echo ""
 echo "You can safely ignore all warnings during the compilation process, but if you"
 echo "run into any errors, please report them to info@nebl.io"
@@ -29,7 +28,6 @@ NEBLIOD=false
 NEBLIOQT=false
 COMPILE=false
 JESSIE=false
-QUICKSYNC=true
 
 # check if we have a Desktop, if not, use home dir
 if [ ! -d "$DEST_DIR" ]; then
@@ -65,14 +63,11 @@ do
 	       NEBLIOD=true;;
         q) echo "Will Install neblio-qt"
 	       NEBLIOQT=true;;
-        x) echo "Disabling Quick Sync and using traditional sync"
-           QUICKSYNC=false;;
         \?) echo "ERROR: Invalid option: $USAGE"
             echo "-c            Compile all from source"
             echo "-d            Install nebliod (default false)"
             echo "-q            Install neblio-qt (default false)"
             echo "-dq           Install both"
-            echo "-x            Disable QuickSync"
         exit 1;;
     esac
 done
@@ -80,10 +75,6 @@ done
 # get sudo
 if [ "$COMPILE" = true ]; then
     sudo whoami
-fi
-
-if [ "$QUICKSYNC" = true ]; then
-    echo "Will use QuickSync"
 fi
 
 # update and install dependencies
@@ -132,9 +123,9 @@ if [ "$NEBLIOD" = true ]; then
         cp ./nebliod $DEST_DIR
     else
         cd $DEST_DIR
-	wget https://github.com/NeblioTeam/neblio/releases/download/v2.0/2018-12-31---v2.0-474d812---nebliod---RPi-raspbian-stretch.tar.gz
-        tar -xvf 2018-12-31---v2.0-474d812---nebliod---RPi-raspbian-stretch.tar.gz
-        rm 2018-12-31---v2.0-474d812---nebliod---RPi-raspbian-stretch.tar.gz
+        wget https://github.com/NeblioTeam/neblio/releases/download/v2.1/2019-06-05---v2.1-1a760ed---nebliod---RPi-raspbian-stretch.tar.gz
+        tar -xvf 2019-06-05---v2.1-1a760ed---nebliod---RPi-raspbian-stretch.tar.gz
+        rm 2019-06-05---v2.1-1a760ed---nebliod---RPi-raspbian-stretch.tar.gz
         sudo chmod 775 nebliod
     fi
     if [ ! -f ~/.neblio/neblio.conf ]; then
@@ -161,23 +152,11 @@ if [ "$NEBLIOQT" = true ]; then
         cp ./wallet/neblio-qt $DEST_DIR
     else
         cd $DEST_DIR
-        wget https://github.com/NeblioTeam/neblio/releases/download/v2.0/2019-01-01---v2.0-474d812---neblio-Qt---RPi-raspbian-stretch.tar.gz
-        tar -xvf 2019-01-01---v2.0-474d812---neblio-Qt---RPi-raspbian-stretch.tar.gz
-        rm 2019-01-01---v2.0-474d812---neblio-Qt---RPi-raspbian-stretch.tar.gz
+        wget https://github.com/NeblioTeam/neblio/releases/download/v2.1/2019-06-06---v2.1-1a760ed---neblio-Qt---RPi-raspbian-stretch.tar.gz
+        tar -xvf 2019-06-06---v2.1-1a760ed---neblio-Qt---RPi-raspbian-stretch.tar.gz
+        rm 2019-06-06---v2.1-1a760ed---neblio-Qt---RPi-raspbian-stretch.tar.gz
         sudo chmod 775 neblio-qt
     fi
-fi
-
-if [ "$QUICKSYNC" = true ]; then
-    echo "Installing Docker for QuickSync"
-    sudo curl -fsSL get.docker.com -o get-docker.sh && sudo sh get-docker.sh && sudo rm get-docker.sh
-    echo "If you have issues starting Docker, try running: sudo apt-get install docker-ce=18.06.1~ce~3-0~raspbian"
-    # until https://github.com/moby/moby/issues/38175 is resolved
-
-    echo "Running the Neblio QuickSync container to copy the Neblio Blockchain"
-    sudo docker pull neblioteam/neblio-quicksync-rpi
-    /bin/bash -c "sudo docker run -i --rm --name neblio-quicksync-rpi -v $HOME/.neblio:/root/.neblio neblioteam/neblio-quicksync-rpi"
-    sudo chown ${USER}:${USER} -R $HOME/.neblio
 fi
 
 if [ "$NEBLIOQT" = true ]; then
