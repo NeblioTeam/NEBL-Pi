@@ -180,18 +180,22 @@ if [ "$QUICKSYNC" = true ]; then
     DATA_FILE=$(curl -s https://raw.githubusercontent.com/NeblioTeam/neblio-quicksync/master/download.json | jq -r --argjson jq_rand $RAND '.[0].files[1].url[$jq_rand]')
 
     # download lock file
+    mv lock.mdb lock.mdb.bak
     while [ 1 ]; do
         wget -O lock.mdb --no-dns-cache --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 0 --continue $LOCK_FILE
         if [ $? = 0 ]; then break; fi; # check return value, break if successful (0)
         sleep 1s;
     done;
+    rm lock.mdb.bak
 
     # download data file
+    mv data.mdb data.mdb.bak
     while [ 1 ]; do
         wget -O data.mdb --no-dns-cache --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 0 --continue $DATA_FILE
         if [ $? = 0 ]; then break; fi; # check return value, break if successful (0)
         sleep 1s;
     done;
+    rm data.mdb.bak
 
     # set permissions
     sudo chown ${USER}:${USER} -R $HOME/.neblio
