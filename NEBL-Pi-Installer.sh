@@ -181,14 +181,14 @@ if [ "$QUICKSYNC" = true ]; then
 
     # download lock file
     while [ 1 ]; do
-        wget -N --no-dns-cache --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 0 --continue $LOCK_FILE
+        wget -O lock.mdb --no-dns-cache --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 0 --continue $LOCK_FILE
         if [ $? = 0 ]; then break; fi; # check return value, break if successful (0)
         sleep 1s;
     done;
 
     # download data file
     while [ 1 ]; do
-        wget -N --no-dns-cache --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 0 --continue $DATA_FILE
+        wget -O data.mdb --no-dns-cache --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 0 --continue $DATA_FILE
         if [ $? = 0 ]; then break; fi; # check return value, break if successful (0)
         sleep 1s;
     done;
