@@ -15,6 +15,7 @@ echo "Pass -c to compile from source"
 echo "Pass -d to install nebliod"
 echo "Pass -q to install neblio-qt"
 echo "Pass -dq to install both"
+echo "Pass -x to disable QuickSync"
 echo ""
 echo "You can safely ignore all warnings during the compilation process, but if you"
 echo "run into any errors, please report them to info@nebl.io"
@@ -28,6 +29,7 @@ NEBLIOD=false
 NEBLIOQT=false
 COMPILE=false
 JESSIE=false
+QUICKSYNC=true
 
 # check if we have a Desktop, if not, use home dir
 if [ ! -d "$DEST_DIR" ]; then
@@ -63,11 +65,14 @@ do
 	       NEBLIOD=true;;
         q) echo "Will Install neblio-qt"
 	       NEBLIOQT=true;;
+	    x) echo "Disabling Quick Sync and using traditional sync"
+           QUICKSYNC=false;;
         \?) echo "ERROR: Invalid option: $USAGE"
             echo "-c            Compile all from source"
             echo "-d            Install nebliod (default false)"
             echo "-q            Install neblio-qt (default false)"
             echo "-dq           Install both"
+            echo "-x            Disable QuickSync"
         exit 1;;
     esac
 done
@@ -75,6 +80,10 @@ done
 # get sudo
 if [ "$COMPILE" = true ]; then
     sudo whoami
+fi
+
+if [ "$QUICKSYNC" = true ]; then
+    echo "Will use QuickSync"
 fi
 
 # update and install dependencies
@@ -106,7 +115,7 @@ if [ "$COMPILE" = true ]; then
 
     # clone our repo, then create some necessary directories
     git clone -b master https://github.com/NeblioTeam/neblio
-    
+
     python neblio/build_scripts/CompileOpenSSL-Linux.py
     python neblio/build_scripts/CompileCurl-Linux.py
     export OPENSSL_INCLUDE_PATH=$NEBLIODIR/openssl_build/include/
@@ -157,6 +166,35 @@ if [ "$NEBLIOQT" = true ]; then
         rm 2019-06-08---v2.1.1-7c49f0e---neblio-Qt---RPi-raspbian-stretch.tar.gz
         sudo chmod 775 neblio-qt
     fi
+fi
+
+if [ "$QUICKSYNC" = true ]; then
+    echo "Downloading files for QuickSync"
+    sudo apt-get install wget curl jq -y
+    mkdir -p $HOME/.neblio
+    mkdir -p $HOME/.neblio/txlmdb
+    cd $HOME/.neblio/txlmdb
+    # grab our JSON data
+    RAND=$((RANDOM % 2))
+    LOCK_FILE=$(curl -s https://raw.githubusercontent.com/NeblioTeam/neblio-quicksync/master/download.json | jq -r --argjson jq_rand $RAND '.[0].files[0].url[$jq_rand]')
+    DATA_FILE=$(curl -s https://raw.githubusercontent.com/NeblioTeam/neblio-quicksync/master/download.json | jq -r --argjson jq_rand $RAND '.[0].files[1].url[$jq_rand]')
+
+    # download lock file
+    while [ 1 ]; do
+        wget --no-dns-cache --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 0 --continue $LOCK_FILE
+        if [ $? = 0 ]; then break; fi; # check return value, break if successful (0)
+        sleep 1s;
+    done;
+
+    # download data file
+    while [ 1 ]; do
+        wget --no-dns-cache --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 0 --continue $DATA_FILE
+        if [ $? = 0 ]; then break; fi; # check return value, break if successful (0)
+        sleep 1s;
+    done;
+
+    # set permissions
+    sudo chown ${USER}:${USER} -R $HOME/.neblio
 fi
 
 if [ "$NEBLIOQT" = true ]; then
