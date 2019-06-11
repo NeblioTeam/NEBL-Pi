@@ -189,7 +189,7 @@ if [ "$QUICKSYNC" = true ]; then
         if [ $? = 0 ]; then
             mv lock.mdb lock.mdb.sha # rename file just for SHA256 testing
             DOWNLOAD_LOCK_SHA256=$(sha256sum lock.mdb.sha)
-            if [ "$LOCK_SHA256" = "$DOWNLOAD_LOCK_SHA256"]; then
+            if [ "$LOCK_SHA256" = "$DOWNLOAD_LOCK_SHA256" ]; then
                 mv lock.mdb.sha lock.mdb # SHA256 success, move back
                 break
             fi
@@ -205,7 +205,7 @@ if [ "$QUICKSYNC" = true ]; then
         if [ $? = 0 ]; then
             mv data.mdb data.mdb.sha # rename file just for SHA256 testing
             DOWNLOAD_DATA_SHA256=$(sha256sum data.mdb.sha)
-            if [ "$DATA_SHA256" = "$DOWNLOAD_DATA_SHA256"]; then
+            if [ "$DATA_SHA256" = "$DOWNLOAD_DATA_SHA256" ]; then
                 mv data.mdb.sha data.mdb # SHA256 success, move back
                 break
             fi
