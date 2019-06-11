@@ -1,5 +1,5 @@
 #!/bin/bash
-#NEBL-Pi Installer v0.7.1 for Neblio Core v2.1.1
+#NEBL-Pi Installer v1.0 for Neblio Core v2.1.1
 
 echo "================================================================================"
 echo "=================== Welcome to the Official NEBL-Pi Installer =================="
