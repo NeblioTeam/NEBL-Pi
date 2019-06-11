@@ -188,6 +188,7 @@ if [ "$QUICKSYNC" = true ]; then
         wget -O lock.mdb --no-dns-cache --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 0 --continue $LOCK_FILE
         if [ $? = 0 ]; then
             mv lock.mdb lock.mdb.sha # rename file just for SHA256 testing
+            echo "lock.mdb download complete, calculating SHA256"
             DOWNLOAD_LOCK_SHA256=$(sha256sum lock.mdb.sha |cut -f 1 -d " ")
             if [ "$LOCK_SHA256" = "$DOWNLOAD_LOCK_SHA256" ]; then
                 mv lock.mdb.sha lock.mdb # SHA256 success, move back
@@ -204,6 +205,7 @@ if [ "$QUICKSYNC" = true ]; then
         wget -O data.mdb --no-dns-cache --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 0 --continue $DATA_FILE
         if [ $? = 0 ]; then
             mv data.mdb data.mdb.sha # rename file just for SHA256 testing
+            echo "data.mdb download complete, calculating SHA256"
             DOWNLOAD_DATA_SHA256=$(sha256sum data.mdb.sha |cut -f 1 -d " ")
             if [ "$DATA_SHA256" = "$DOWNLOAD_DATA_SHA256" ]; then
                 mv data.mdb.sha data.mdb # SHA256 success, move back
