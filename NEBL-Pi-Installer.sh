@@ -87,8 +87,8 @@ if [ "$QUICKSYNC" = true ]; then
 fi
 
 # update and install dependencies
+sudo apt-get update -y
 if [ "$COMPILE" = true ]; then
-    sudo apt-get update -y
     sudo apt-get install build-essential -y
     sudo apt-get install libboost-all-dev -y
     sudo apt-get install libdb++-dev -y
