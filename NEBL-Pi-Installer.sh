@@ -132,9 +132,9 @@ if [ "$NEBLIOD" = true ]; then
         cp ./nebliod $DEST_DIR
     else
         cd $DEST_DIR
-        wget https://github.com/NeblioTeam/neblio/releases/download/v2.1.1/2019-06-08---v2.1.1-7c49f0e---nebliod---RPi-raspbian-stretch.tar.gz
-        tar -xvf 2019-06-08---v2.1.1-7c49f0e---nebliod---RPi-raspbian-stretch.tar.gz
-        rm 2019-06-08---v2.1.1-7c49f0e---nebliod---RPi-raspbian-stretch.tar.gz
+        wget https://github.com/NeblioTeam/neblio/releases/download/v2.1.1.1/2019-11-02---v2.1.1.1-3afd6ff---nebliod---RPi-raspbian-stretch.tar.gz
+        tar -xvf 2019-11-02---v2.1.1.1-3afd6ff---nebliod---RPi-raspbian-stretch.tar.gz
+        rm 2019-11-02---v2.1.1.1-3afd6ff---nebliod---RPi-raspbian-stretch.tar.gz
         sudo chmod 775 nebliod
     fi
     if [ ! -f ~/.neblio/neblio.conf ]; then
@@ -161,9 +161,9 @@ if [ "$NEBLIOQT" = true ]; then
         cp ./wallet/neblio-qt $DEST_DIR
     else
         cd $DEST_DIR
-        wget https://github.com/NeblioTeam/neblio/releases/download/v2.1.1/2019-06-08---v2.1.1-7c49f0e---neblio-Qt---RPi-raspbian-stretch.tar.gz
-        tar -xvf 2019-06-08---v2.1.1-7c49f0e---neblio-Qt---RPi-raspbian-stretch.tar.gz
-        rm 2019-06-08---v2.1.1-7c49f0e---neblio-Qt---RPi-raspbian-stretch.tar.gz
+        wget https://github.com/NeblioTeam/neblio/releases/download/v2.1.1.1/2019-11-02---v2.1.1.1-3afd6ff---neblio-Qt---RPi-raspbian-stretch.tar.gz
+        tar -xvf 2019-11-02---v2.1.1.1-3afd6ff---neblio-Qt---RPi-raspbian-stretch.tar.gz
+        rm 2019-11-02---v2.1.1.1-3afd6ff---neblio-Qt---RPi-raspbian-stretch.tar.gz
         sudo chmod 775 neblio-qt
     fi
 fi
