@@ -30,6 +30,7 @@ NEBLIOQT=false
 COMPILE=false
 JESSIE=false
 QUICKSYNC=true
+DBVERSION=70514
 
 # check if we have a Desktop, if not, use home dir
 if [ ! -d "$DEST_DIR" ]; then
@@ -175,12 +176,12 @@ if [ "$QUICKSYNC" = true ]; then
     mkdir -p $HOME/.neblio/txlmdb
     cd $HOME/.neblio/txlmdb
     # grab our JSON data
-    RAND=$((RANDOM % 2))
-    LOCK_FILE=$(curl -s https://raw.githubusercontent.com/NeblioTeam/neblio-quicksync/master/download.json | jq -r --argjson jq_rand $RAND '.[0].files[0].url[$jq_rand]')
-    DATA_FILE=$(curl -s https://raw.githubusercontent.com/NeblioTeam/neblio-quicksync/master/download.json | jq -r --argjson jq_rand $RAND '.[0].files[1].url[$jq_rand]')
+    RAND=$((RANDOM % 1))
+    LOCK_FILE=$(curl -s https://raw.githubusercontent.com/NeblioTeam/neblio-quicksync/master/download.json | jq -c --argjson jq_dbversion $DBVERSION '.[] | select(.dbversion == $jq_dbversion)' | jq -r --argjson jq_rand $RAND '.files[0].url[$jq_rand]')
+    DATA_FILE=$(curl -s https://raw.githubusercontent.com/NeblioTeam/neblio-quicksync/master/download.json | jq -c --argjson jq_dbversion $DBVERSION '.[] | select(.dbversion == $jq_dbversion)' | jq -r --argjson jq_rand $RAND '.files[1].url[$jq_rand]')
 
-    LOCK_SHA256=$(curl -s https://raw.githubusercontent.com/NeblioTeam/neblio-quicksync/master/download.json | jq -r '.[0].files[0].sha256sum')
-    DATA_SHA256=$(curl -s https://raw.githubusercontent.com/NeblioTeam/neblio-quicksync/master/download.json | jq -r '.[0].files[1].sha256sum')
+    LOCK_SHA256=$(curl -s https://raw.githubusercontent.com/NeblioTeam/neblio-quicksync/master/download.json | jq -c --argjson jq_dbversion $DBVERSION '.[] | select(.dbversion == $jq_dbversion)' | jq -r '.files[0].sha256sum')
+    DATA_SHA256=$(curl -s https://raw.githubusercontent.com/NeblioTeam/neblio-quicksync/master/download.json | jq -c --argjson jq_dbversion $DBVERSION '.[] | select(.dbversion == $jq_dbversion)' | jq -r '.files[1].sha256sum')
 
     # download lock file
     mv lock.mdb lock.mdb.bak
