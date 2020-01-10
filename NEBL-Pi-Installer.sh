@@ -1,5 +1,5 @@
 #!/bin/bash
-#NEBL-Pi Installer v1.0 for Neblio Core v2.1.1
+#NEBL-Pi Installer v1.0 for Neblio Core v3.0
 
 echo "================================================================================"
 echo "=================== Welcome to the Official NEBL-Pi Installer =================="
@@ -30,7 +30,7 @@ NEBLIOQT=false
 COMPILE=false
 JESSIE=false
 QUICKSYNC=true
-DBVERSION=70514
+DBVERSION=70515
 
 # check if we have a Desktop, if not, use home dir
 if [ ! -d "$DEST_DIR" ]; then
@@ -99,6 +99,7 @@ if [ "$COMPILE" = true ]; then
     sudo apt-get install libidn11-dev -y
     sudo apt-get install librtmp-dev -y
     sudo apt-get install libcurl4-openssl-dev -y
+    sudo apt-get install libsodium-dev -y
     sudo apt-get install git -y
     if [ "$NEBLIOQT" = true ]; then
         sudo apt-get install qt5-default -y
@@ -119,9 +120,12 @@ if [ "$COMPILE" = true ]; then
 
     python neblio/build_scripts/CompileOpenSSL-Linux.py
     python neblio/build_scripts/CompileCurl-Linux.py
+    python neblio/build_scripts/CompileBoost-Linux.py
     export OPENSSL_INCLUDE_PATH=$NEBLIODIR/openssl_build/include/
     export OPENSSL_LIB_PATH=$NEBLIODIR/openssl_build/lib/
     export PKG_CONFIG_PATH=$NEBLIODIR/curl_build/lib/pkgconfig/
+    export BOOST_INCLUDE_PATH=$NEBLIODIR/boost_build/include/
+    export BOOST_LIB_PATH=$NEBLIODIR/boost_build/lib/
     cd neblio/wallet
 fi
 
@@ -133,9 +137,9 @@ if [ "$NEBLIOD" = true ]; then
         cp ./nebliod $DEST_DIR
     else
         cd $DEST_DIR
-        wget https://github.com/NeblioTeam/neblio/releases/download/v2.1.1.1/2019-11-02---v2.1.1.1-3afd6ff---nebliod---RPi-raspbian-stretch.tar.gz
-        tar -xvf 2019-11-02---v2.1.1.1-3afd6ff---nebliod---RPi-raspbian-stretch.tar.gz
-        rm 2019-11-02---v2.1.1.1-3afd6ff---nebliod---RPi-raspbian-stretch.tar.gz
+        wget https://github.com/NeblioTeam/neblio/releases/download/v3.0/2020-01-09---v3.0-79f6725---nebliod---RPi-raspbian-stretch.tar.gz
+        tar -xvf 2020-01-09---v3.0-79f6725---nebliod---RPi-raspbian-stretch.tar.gz
+        rm 2020-01-09---v3.0-79f6725---nebliod---RPi-raspbian-stretch.tar.gz
         sudo chmod 775 nebliod
     fi
     if [ ! -f ~/.neblio/neblio.conf ]; then
@@ -157,14 +161,16 @@ if [ "$NEBLIOQT" = true ]; then
         qmake "USE_UPNP=1" "USE_QRCODE=1" "RELEASE=1" \
         "OPENSSL_INCLUDE_PATH=$NEBLIODIR/openssl_build/include/" \
         "OPENSSL_LIB_PATH=$NEBLIODIR/openssl_build/lib/" \
-        "PKG_CONFIG_PATH=$NEBLIODIR/curl_build/lib/pkgconfig/" neblio-wallet.pro
+        "PKG_CONFIG_PATH=$NEBLIODIR/curl_build/lib/pkgconfig/" \
+        "BOOST_INCLUDE_PATH=$NEBLIODIR/boost_build/include/" \
+        "BOOST_LIB_PATH=$NEBLIODIR/boost_build/lib/" neblio-wallet.pro
         make -B -w
         cp ./wallet/neblio-qt $DEST_DIR
     else
         cd $DEST_DIR
-        wget https://github.com/NeblioTeam/neblio/releases/download/v2.1.1.1/2019-11-02---v2.1.1.1-3afd6ff---neblio-Qt---RPi-raspbian-stretch.tar.gz
-        tar -xvf 2019-11-02---v2.1.1.1-3afd6ff---neblio-Qt---RPi-raspbian-stretch.tar.gz
-        rm 2019-11-02---v2.1.1.1-3afd6ff---neblio-Qt---RPi-raspbian-stretch.tar.gz
+        wget https://github.com/NeblioTeam/neblio/releases/download/v3.0/2020-01-09---v3.0-79f6725---neblio-Qt---RPi-raspbian-stretch.tar.gz
+        tar -xvf 2020-01-09---v3.0-79f6725---neblio-Qt---RPi-raspbian-stretch.tar.gz
+        rm 2020-01-09---v3.0-79f6725---neblio-Qt---RPi-raspbian-stretch.tar.gz
         sudo chmod 775 neblio-qt
     fi
 fi
