@@ -137,7 +137,7 @@ if [ "$NEBLIOD" = true ]; then
         cp ./nebliod $DEST_DIR
     else
         cd $DEST_DIR
-        wget hhttps://github.com/NeblioTeam/neblio/releases/download/v3.0.2/2020-04-10---v3.0.2-3fc031a---nebliod---RPi-raspbian-stretch.tar.gz
+        wget https://github.com/NeblioTeam/neblio/releases/download/v3.0.2/2020-04-10---v3.0.2-3fc031a---nebliod---RPi-raspbian-stretch.tar.gz
         tar -xvf 2020-04-10---v3.0.2-3fc031a---nebliod---RPi-raspbian-stretch.tar.gz
         rm 2020-04-10---v3.0.2-3fc031a---nebliod---RPi-raspbian-stretch.tar.gz
         sudo chmod 775 nebliod
