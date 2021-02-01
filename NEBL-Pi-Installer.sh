@@ -1,5 +1,5 @@
 #!/bin/bash
-#NEBL-Pi Installer v1.0.5 for Neblio Core v3.1.1
+#NEBL-Pi Installer v1.0.6 for Neblio Core v3.2.0
 
 echo "================================================================================"
 echo "=================== Welcome to the Official NEBL-Pi Installer =================="
@@ -30,7 +30,7 @@ NEBLIOQT=false
 COMPILE=false
 JESSIE=false
 QUICKSYNC=true
-DBVERSION=70515
+DBVERSION=70516
 
 # check if we have a Desktop, if not, use home dir
 if [ ! -d "$DEST_DIR" ]; then
@@ -137,9 +137,9 @@ if [ "$NEBLIOD" = true ]; then
         cp ./nebliod $DEST_DIR
     else
         cd $DEST_DIR
-        wget https://github.com/NeblioTeam/neblio/releases/download/v3.1.1/2020-12-30---v3.1.1-b24c44b---nebliod---RPi-raspbian-stretch.tar.gz
-        tar -xvf 2020-12-30---v3.1.1-b24c44b---nebliod---RPi-raspbian-stretch.tar.gz
-        rm 2020-12-30---v3.1.1-b24c44b---nebliod---RPi-raspbian-stretch.tar.gz
+        wget https://github.com/NeblioTeam/neblio/releases/download/v3.2.0/2021-02-01---v3.2.0-5f11d65---nebliod---RPi-raspbian-stretch.tar.gz
+        tar -xvf 2021-02-01---v3.2.0-5f11d65---nebliod---RPi-raspbian-stretch.tar.gz
+        rm 2021-02-01---v3.2.0-5f11d65---nebliod---RPi-raspbian-stretch.tar.gz
         sudo chmod 775 nebliod
     fi
     if [ ! -f ~/.neblio/neblio.conf ]; then
@@ -168,9 +168,9 @@ if [ "$NEBLIOQT" = true ]; then
         cp ./wallet/neblio-qt $DEST_DIR
     else
         cd $DEST_DIR
-        wget https://github.com/NeblioTeam/neblio/releases/download/v3.1.1/2020-12-30---v3.1.1-b24c44b---neblio-Qt---RPi-raspbian-stretch.tar.gz
-        tar -xvf 2020-12-30---v3.1.1-b24c44b---neblio-Qt---RPi-raspbian-stretch.tar.gz
-        rm 2020-12-30---v3.1.1-b24c44b---neblio-Qt---RPi-raspbian-stretch.tar.gz
+        wget https://github.com/NeblioTeam/neblio/releases/download/v3.2.0/2021-02-01---v3.2.0-5f11d65---neblio-Qt---RPi-raspbian-stretch.tar.gz
+        tar -xvf 2021-02-01---v3.2.0-5f11d65---neblio-Qt---RPi-raspbian-stretch.tar.gz
+        rm 2021-02-01---v3.2.0-5f11d65---neblio-Qt---RPi-raspbian-stretch.tar.gz
         sudo chmod 775 neblio-qt
     fi
 fi
