@@ -1,5 +1,5 @@
 #!/bin/bash
-#NEBL-Pi Installer v1.0.8 for Neblio Core v3.3.0
+#NEBL-Pi Installer v1.0.9 for Neblio Core v3.4.0
 
 echo "================================================================================"
 echo "=================== Welcome to the Official NEBL-Pi Installer =================="
@@ -137,9 +137,9 @@ if [ "$NEBLIOD" = true ]; then
         cp ./nebliod $DEST_DIR
     else
         cd $DEST_DIR
-        wget https://github.com/NeblioTeam/neblio/releases/download/v3.3.0/2021-07-12---v3.3.0-36cb445---nebliod---RPi-raspbian-stretch.tar.gz
-        tar -xvf 2021-07-12---v3.3.0-36cb445---nebliod---RPi-raspbian-stretch.tar.gz
-        rm 2021-07-12---v3.3.0-36cb445---nebliod---RPi-raspbian-stretch.tar.gz
+        wget https://github.com/NeblioTeam/neblio/releases/download/v3.4.0/2021-11-22---v3.4.0-2e0dfb8---nebliod---RPi-raspbian-stretch.tar.gz
+        tar -xvf 2021-11-22---v3.4.0-2e0dfb8---nebliod---RPi-raspbian-stretch.tar.gz
+        rm 2021-11-22---v3.4.0-2e0dfb8---nebliod---RPi-raspbian-stretch.tar.gz
         sudo chmod 775 nebliod
     fi
     if [ ! -f ~/.neblio/neblio.conf ]; then
@@ -168,9 +168,9 @@ if [ "$NEBLIOQT" = true ]; then
         cp ./wallet/neblio-qt $DEST_DIR
     else
         cd $DEST_DIR
-        wget https://github.com/NeblioTeam/neblio/releases/download/v3.3.0/2021-07-12---v3.3.0-36cb445---neblio-Qt---RPi-raspbian-stretch.tar.gz
-        tar -xvf 2021-07-12---v3.3.0-36cb445---neblio-Qt---RPi-raspbian-stretch.tar.gz
-        rm 2021-07-12---v3.3.0-36cb445---neblio-Qt---RPi-raspbian-stretch.tar.gz
+        wget https://github.com/NeblioTeam/neblio/releases/download/v3.4.0/2021-11-22---v3.4.0-2e0dfb8---neblio-Qt---RPi-raspbian-stretch.tar.gz
+        tar -xvf 2021-11-22---v3.4.0-2e0dfb8---neblio-Qt---RPi-raspbian-stretch.tar.gz
+        rm 2021-11-22---v3.4.0-2e0dfb8---neblio-Qt---RPi-raspbian-stretch.tar.gz
         sudo chmod 775 neblio-qt
     fi
 fi
